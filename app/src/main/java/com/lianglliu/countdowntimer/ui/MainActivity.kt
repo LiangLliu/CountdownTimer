@@ -3,12 +3,14 @@ package com.lianglliu.countdowntimer.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import com.lianglliu.countdowntimer.navigate.NavigateApp
 import com.lianglliu.countdowntimer.ui.theme.CountdownTimerTheme
+import com.lianglliu.countdowntimer.ui.viewmodels.SharedViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,11 +22,13 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background,
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    NavigateApp()
+                    NavigateApp(sharedViewModel = sharedViewModel)
                 }
             }
         }
     }
+
+    private val sharedViewModel: SharedViewModel by viewModels()
 }
 
 

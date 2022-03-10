@@ -10,25 +10,25 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.lianglliu.countdowntimer.models.MinutesSeconds
 import com.lianglliu.countdowntimer.ui.components.CircleIcon
 import com.lianglliu.countdowntimer.ui.components.picker.MinutesSecondsPicker
+import com.lianglliu.countdowntimer.ui.viewmodels.SharedViewModel
 
 @Composable
 fun TimerPicker(
-    navController: NavController
+    navController: NavController,
+    viewModel: SharedViewModel
 ) {
-    var state by remember { mutableStateOf(MinutesSeconds(5, 10, 10)) }
+
+    val timerState by viewModel.timerState.collectAsState()
 
     Column(
         modifier = Modifier
@@ -53,9 +53,9 @@ fun TimerPicker(
                 .weight(2f), contentAlignment = Alignment.Center
         ) {
             MinutesSecondsPicker(
-                value = state,
+                value = timerState,
                 onValueChange = {
-                    state = it
+                    viewModel.updateTimer(it)
                 },
             )
         }
@@ -66,6 +66,7 @@ fun TimerPicker(
         ) {
             CircleIcon(Icons.Default.PlayArrow, onClick = {
                 navController.navigate("countdown")
+                viewModel.startTimer()
             })
         }
     }

@@ -9,6 +9,7 @@ val Teal200 = Color(0xFF03DAC5)
 
 val bgColorCenter = Color(0xFF404364)
 val bgColorEdge = Color(0xFF2E3048)
+
 //val darkRed = Color(0xFFD53175)
 val darkRed = Color(0xFF03A9F4)
 //val lightOrange = Color(0xFFF7886A)

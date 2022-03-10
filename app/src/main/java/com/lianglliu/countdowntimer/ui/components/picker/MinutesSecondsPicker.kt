@@ -13,16 +13,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-import com.lianglliu.countdowntimer.models.MinutesSeconds
 import com.lianglliu.countdowntimer.ui.theme.bgColorCenter
+import com.lianglliu.countdowntimer.ui.viewmodels.TimerViewState
+
 
 @Composable
 fun MinutesSecondsPicker(
     modifier: Modifier = Modifier,
-    value: MinutesSeconds,
-    onValueChange: (MinutesSeconds) -> Unit,
+    value: TimerViewState,
+    onValueChange: (TimerViewState) -> Unit,
     dividersColor: Color = bgColorCenter,
-
     textStyle: TextStyle = TextStyle(
         fontSize = 40.sp,
         fontWeight = FontWeight.Bold,
