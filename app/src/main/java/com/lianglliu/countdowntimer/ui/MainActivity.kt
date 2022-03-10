@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import com.lianglliu.countdowntimer.ui.countdown.Countdown
 import com.lianglliu.countdowntimer.ui.theme.CountdownTimerTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,9 +20,9 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background,
                     modifier = Modifier.fillMaxSize()
                 ) {
-//                    Countdown()
+                    Countdown()
 
-                    TimerPicker()
+//                    TimerPicker()
                 }
             }
         }
