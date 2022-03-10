@@ -1,4 +1,4 @@
-package com.lianglliu.countdowntimer.ui.picker
+package com.lianglliu.countdowntimer.ui.components.picker
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background

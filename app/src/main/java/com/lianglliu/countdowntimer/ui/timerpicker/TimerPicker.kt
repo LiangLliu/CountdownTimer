@@ -1,4 +1,4 @@
-package com.lianglliu.countdowntimer.ui
+package com.lianglliu.countdowntimer.ui.timerpicker
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,12 +19,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.lianglliu.countdowntimer.data.MinutesSeconds
+import androidx.navigation.NavController
+import com.lianglliu.countdowntimer.models.MinutesSeconds
 import com.lianglliu.countdowntimer.ui.components.CircleIcon
-import com.lianglliu.countdowntimer.ui.picker.MinutesSecondsPicker
+import com.lianglliu.countdowntimer.ui.components.picker.MinutesSecondsPicker
 
 @Composable
-fun TimerPicker() {
+fun TimerPicker(
+    navController: NavController
+) {
     var state by remember { mutableStateOf(MinutesSeconds(5, 10, 10)) }
 
     Column(
@@ -61,7 +64,9 @@ fun TimerPicker() {
             modifier = Modifier.weight(1f),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            CircleIcon(Icons.Default.PlayArrow, onClick = {})
+            CircleIcon(Icons.Default.PlayArrow, onClick = {
+                navController.navigate("countdown")
+            })
         }
     }
 }

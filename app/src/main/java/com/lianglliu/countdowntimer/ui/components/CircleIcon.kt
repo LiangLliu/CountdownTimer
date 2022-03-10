@@ -19,6 +19,7 @@ fun CircleIcon(
     onClick: () -> Unit,
 ) {
     IconButton(
+        modifier = Modifier.padding(horizontal = 5.dp),
         onClick = onClick
     ) {
         Icon(

@@ -1,4 +1,4 @@
-package com.lianglliu.countdowntimer.ui.picker
+package com.lianglliu.countdowntimer.ui.components.picker
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -13,7 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-import com.lianglliu.countdowntimer.data.MinutesSeconds
+import com.lianglliu.countdowntimer.models.MinutesSeconds
 import com.lianglliu.countdowntimer.ui.theme.bgColorCenter
 
 @Composable

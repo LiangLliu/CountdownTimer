@@ -1,4 +1,4 @@
-package com.lianglliu.countdowntimer.data
+package com.lianglliu.countdowntimer.models
 
 data class MinutesSeconds(
     val hours: Int,
