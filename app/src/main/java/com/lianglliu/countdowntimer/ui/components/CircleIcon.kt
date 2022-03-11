@@ -9,14 +9,16 @@ import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.lianglliu.countdowntimer.ui.theme.bgColorCenter
 
 @Composable
 fun CircleIcon(
     imageVector: ImageVector,
     onClick: () -> Unit,
+    bgCoLor: Color,
+    iconTintCoLor: Color,
 ) {
     IconButton(
         modifier = Modifier.padding(horizontal = 5.dp),
@@ -28,8 +30,9 @@ fun CircleIcon(
             modifier = Modifier
                 .size(60.dp)
                 .clip(CircleShape)
-                .background(bgColorCenter)
-                .padding(10.dp)
+                .background(bgCoLor)
+                .padding(7.dp),
+            tint = iconTintCoLor
         )
     }
 }

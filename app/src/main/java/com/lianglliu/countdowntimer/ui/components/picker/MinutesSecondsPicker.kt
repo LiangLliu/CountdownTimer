@@ -12,25 +12,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-import com.lianglliu.countdowntimer.ui.theme.bgColorCenter
 import com.lianglliu.countdowntimer.ui.viewmodels.TimerViewState
-
 
 @Composable
 fun MinutesSecondsPicker(
     modifier: Modifier = Modifier,
     value: TimerViewState,
     onValueChange: (TimerViewState) -> Unit,
-    dividersColor: Color = bgColorCenter,
-    textStyle: TextStyle = TextStyle(
-        fontSize = 40.sp,
-        fontWeight = FontWeight.Bold,
-    ),
+
+    dividersColor: Color,
+    textColor: Color,
 ) {
     val hoursRange: List<String> = initHoursData()
     val minutesRange: List<String> = initMinutesData()
     val secondsRange: List<String> = initMinutesData()
+    val textStyle = TextStyle(
+        fontSize = 40.sp,
+        fontWeight = FontWeight.Bold,
+        color = textColor
+    )
 
     Row(
         modifier = modifier,
@@ -45,12 +45,12 @@ fun MinutesSecondsPicker(
             onValueChange = {
                 onValueChange(value.copy(hours = it.toInt()))
             },
-            dividersColor = bgColorCenter,
+            dividersColor = dividersColor,
             textStyle = textStyle,
             range = hoursRange
         )
 
-        SmallText("时")
+        SmallText("时", textColor)
 
         StringPicker(
             modifier = Modifier.weight(1f),
@@ -63,7 +63,7 @@ fun MinutesSecondsPicker(
             range = minutesRange
         )
 
-        SmallText("分")
+        SmallText("分", textColor)
 
         StringPicker(
             modifier = Modifier.weight(1f),
@@ -76,12 +76,15 @@ fun MinutesSecondsPicker(
             range = secondsRange
         )
 
-        SmallText("秒")
+        SmallText("秒", textColor)
     }
 }
 
 @Composable
-fun SmallText(text: String) {
+fun SmallText(
+    text: String,
+    textColor: Color
+) {
     Text(
         modifier = Modifier.padding(
             start = 1.dp,
@@ -89,7 +92,8 @@ fun SmallText(text: String) {
         ),
         textAlign = TextAlign.Center,
         text = text,
-        fontSize = 12.sp
+        fontSize = 12.sp,
+        color = textColor
     )
 }
 

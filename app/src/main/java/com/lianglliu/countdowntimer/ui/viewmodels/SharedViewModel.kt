@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class SharedViewModel : ViewModel() {
-    private val _state = MutableStateFlow(CountdownViewState())
-    val state: StateFlow<CountdownViewState>
-        get() = _state
+    private val _countdownState = MutableStateFlow(CountdownViewState())
+    val countdownState: StateFlow<CountdownViewState>
+        get() = _countdownState
 
     private val _timerState = MutableStateFlow(TimerViewState())
 
@@ -40,7 +40,7 @@ class SharedViewModel : ViewModel() {
     }
 
     fun startTimer() {
-        _state.value = CountdownViewState(_timerState.value.toDuration())
+        _countdownState.value = CountdownViewState(_timerState.value.toDuration())
         toggle()
         saveTimerState()
     }
@@ -48,9 +48,9 @@ class SharedViewModel : ViewModel() {
     fun toggle() {
         if (job.value == null) {
             job.value = viewModelScope.launch {
-                while (_state.value.totalSeconds > 0) {
+                while (_countdownState.value.totalSeconds > 0) {
                     delay(1000)
-                    _state.value = CountdownViewState(state.value.totalSeconds - 1)
+                    _countdownState.value = CountdownViewState(countdownState.value.totalSeconds - 1)
                 }
             }
         } else {
@@ -88,7 +88,7 @@ class SharedViewModel : ViewModel() {
                         minutes = duration.toMinutes(),
                         seconds = duration.toSeconds()
                     )
-                    _state.value = CountdownViewState(timerData.value)
+                    _countdownState.value = CountdownViewState(timerData.value)
                 }
             }
     }
