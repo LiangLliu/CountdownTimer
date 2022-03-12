@@ -53,6 +53,7 @@ fun TimerPicker(
         Box(
             modifier = Modifier
                 .padding(horizontal = 20.dp)
+                .padding(bottom = 50.dp)
                 .weight(3f),
             contentAlignment = Alignment.Center
         ) {
@@ -61,7 +62,7 @@ fun TimerPicker(
                 onValueChange = {
                     viewModel.updateTimer(it)
                 },
-                dividersColor = timerPickerColor.dividersColor,
+                dividersColor = timerPickerColor.pickerDividersColor,
                 textColor = timerPickerColor.textColor,
             )
         }
@@ -76,7 +77,7 @@ fun TimerPicker(
                     navController.navigate("countdown")
                     viewModel.startTimer()
                 },
-                bgCoLor = timerPickerColor.bgColorCenter,
+                bgCoLor = timerPickerColor.bgIconColor,
                 iconTintCoLor = timerPickerColor.iconTintCoLor
             )
         }

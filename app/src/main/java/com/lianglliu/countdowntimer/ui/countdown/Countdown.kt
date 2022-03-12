@@ -1,7 +1,5 @@
 package com.lianglliu.countdowntimer.ui.countdown
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,7 +11,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Stop
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -21,6 +18,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,73 +41,90 @@ fun Countdown(
 ) {
     val viewState by viewModel.countdownState.collectAsState()
     val seconds by rememberSaveable { mutableStateOf(viewState.totalSeconds) }
-
     val countdownColor = buildCountdownColor(appTheme)
 
-    Box(
-        Modifier
+    Column(
+        modifier = Modifier
             .fillMaxSize()
-            .background(
-                color = MaterialTheme.colorScheme.background
-            ),
-        contentAlignment = Alignment.Center
+            .padding(vertical = 40.dp),
+        verticalArrangement = Arrangement.Center, // 指定垂直方向居中显示
+        horizontalAlignment = Alignment.CenterHorizontally // 指定水平方向居中对齐
     ) {
-        TickWheel(
-            totalSeconds = viewState.totalSeconds
-        ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+        Text(
+            modifier = Modifier
+                .weight(1f),
+            text = "计时中",
+            fontWeight = FontWeight.Bold,
+            fontSize = 30.sp,
+            color = countdownColor.textColor
+        )
+
+        Box(
+            Modifier
+                .fillMaxSize()
+                .padding(bottom = 50.dp)
+                .weight(3f),
+            contentAlignment = Alignment.Center
+        )
+        {
+            TickWheel(
+                totalSeconds = viewState.totalSeconds,
+                tickStartColor = countdownColor.tickStartColor,
+                tickEndColor = countdownColor.tickEndColor,
+                brushColor = countdownColor.brushColor
             ) {
-                Text(
-                    text = viewState.totalSeconds.toTimeHHMMSS(),
-                    color = countdownColor.textColor,
-                    fontSize = 38.sp,
-                    textAlign = TextAlign.Center
-                )
-                Text(
-                    modifier = Modifier.padding(top = 5.dp),
-                    text = buildTimeHintText(seconds),
-                    color = countdownColor.textColor,
-                    fontSize = 13.sp,
-                    textAlign = TextAlign.Center
-                )
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = viewState.totalSeconds.toTimeHHMMSS(),
+                        color = countdownColor.textColor,
+                        fontSize = 38.sp,
+                        textAlign = TextAlign.Center
+                    )
+                    Text(
+                        modifier = Modifier.padding(top = 5.dp),
+                        text = buildTimeHintText(seconds),
+                        color = countdownColor.textColor,
+                        fontSize = 13.sp,
+                        textAlign = TextAlign.Center
+                    )
+                }
             }
         }
 
-        AnimatedVisibility(
-            true,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 80.dp)
+        Row(
+            modifier = Modifier.weight(1f),
+            verticalAlignment = Alignment.CenterVertically
         ) {
             if (viewState.totalSeconds > 0) {
-                Row {
+
+                CircleIcon(
+                    imageVector = Icons.Default.Stop,
+                    onClick = {
+                        viewModel.clear()
+                        navController.navigate("timerPicker")
+                    },
+                    bgCoLor = countdownColor.bgIconColor,
+                    iconTintCoLor = countdownColor.iconTintCoLor
+                )
+                if (viewModel.isPause()) {
                     CircleIcon(
-                        imageVector = Icons.Default.Stop,
-                        onClick = {
-                            viewModel.clear()
-                            navController.navigate("timerPicker")
-                        },
-                        bgCoLor = countdownColor.bgColorCenter,
+                        imageVector = Icons.Default.PlayArrow,
+                        onClick = { viewModel.toggle() },
+                        bgCoLor = countdownColor.bgIconColor,
                         iconTintCoLor = countdownColor.iconTintCoLor
                     )
-                    if (viewModel.isPause()) {
-                        CircleIcon(
-                            imageVector = Icons.Default.PlayArrow,
-                            onClick = { viewModel.toggle() },
-                            bgCoLor = countdownColor.bgColorCenter,
-                            iconTintCoLor = countdownColor.iconTintCoLor
-                        )
-                    } else {
-                        CircleIcon(
-                            imageVector = Icons.Default.Pause,
-                            onClick = { viewModel.toggle() },
-                            bgCoLor = countdownColor.bgColorCenter,
-                            iconTintCoLor = countdownColor.iconTintCoLor
-                        )
-                    }
+                } else {
+                    CircleIcon(
+                        imageVector = Icons.Default.Pause,
+                        onClick = { viewModel.toggle() },
+                        bgCoLor = countdownColor.bgIconColor,
+                        iconTintCoLor = countdownColor.iconTintCoLor
+                    )
                 }
+
             } else {
                 CircleIcon(
                     imageVector = Icons.Default.Stop,
@@ -117,7 +132,7 @@ fun Countdown(
                         viewModel.clear()
                         navController.navigate("timerPicker")
                     },
-                    bgCoLor = countdownColor.bgColorCenter,
+                    bgCoLor = countdownColor.bgIconColor,
                     iconTintCoLor = countdownColor.iconTintCoLor
                 )
             }

@@ -12,8 +12,6 @@ import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.util.lerp
-import com.lianglliu.countdowntimer.ui.theme.darkRed
-import com.lianglliu.countdowntimer.ui.theme.lightOrange
 import com.lianglliu.countdowntimer.utils.center
 import com.lianglliu.countdowntimer.utils.drawTick
 import com.lianglliu.countdowntimer.utils.sweepGradient
@@ -32,8 +30,9 @@ const val RadiusE = 1.4f
 @Composable
 fun TickWheel(
     ticks: Int = 60,
-    startColor: Color = lightOrange,
-    endColor: Color = darkRed,
+    tickStartColor: Color,
+    tickEndColor: Color,
+    brushColor: Color,
     totalSeconds: Int,
     content: @Composable () -> Unit
 ) {
@@ -53,13 +52,13 @@ fun TickWheel(
                 val d = unitRadius * RadiusD
                 val e = unitRadius * RadiusE
 
-                val offBrush = Color.White
-                    .copy(alpha = 0.1f)
+                val offBrush = brushColor
+                    .copy(alpha = 0.8f)
                     .toBrush()
 
                 val sweep = Brush.sweepGradient(
-                    startColor,
-                    endColor,
+                    tickStartColor,
+                    tickEndColor,
                     center,
                     // use a little over 180deg so that the first "tick" mark isn't split down the middle
                     -182f

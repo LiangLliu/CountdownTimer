@@ -19,7 +19,6 @@ fun MinutesSecondsPicker(
     modifier: Modifier = Modifier,
     value: TimerViewState,
     onValueChange: (TimerViewState) -> Unit,
-
     dividersColor: Color,
     textColor: Color,
 ) {
@@ -91,6 +90,7 @@ fun SmallText(
             end = 7.dp,
         ),
         textAlign = TextAlign.Center,
+        fontWeight = FontWeight.Bold,
         text = text,
         fontSize = 12.sp,
         color = textColor

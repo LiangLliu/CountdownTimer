@@ -21,13 +21,13 @@ private val LightColorScheme = lightColorScheme(
 )
 
 private val DarkColorScheme = darkColorScheme(
-    secondary = lightOrange,
-    primary = darkRed,
+    primary = PrimaryColorDark,
+    secondary = BackgroundColorDark,
     onPrimary = OnPrimaryColorDark,
     primaryContainer = PrimaryContainerColorDark,
     surface = SurfaceColorDark,
     onSurface = OnSurfaceColorDark,
-    background = bgDarkColorEdge,
+    background = BackgroundColorDark,
     onSecondaryContainer = onSecondaryContainerDark
 )
 

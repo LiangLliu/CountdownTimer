@@ -1,40 +1,36 @@
 package com.lianglliu.countdowntimer.model
 
 import androidx.compose.ui.graphics.Color
-import com.lianglliu.countdowntimer.ui.theme.bgDarkColorCenter
-import com.lianglliu.countdowntimer.ui.theme.bgDarkColorEdge
-import com.lianglliu.countdowntimer.ui.theme.darkDividersColor
-import com.lianglliu.countdowntimer.ui.theme.bgLightColorCenter
-import com.lianglliu.countdowntimer.ui.theme.bgLightColorEdge
+import com.lianglliu.countdowntimer.ui.theme.bgIconDarkCenter
+import com.lianglliu.countdowntimer.ui.theme.bgIconLightCenter
+import com.lianglliu.countdowntimer.ui.theme.pickerDarkDividersColor
+import com.lianglliu.countdowntimer.ui.theme.darkIconTintCoLor
 import com.lianglliu.countdowntimer.ui.theme.darkTextColor
-import com.lianglliu.countdowntimer.ui.theme.lightDividersColor
+import com.lianglliu.countdowntimer.ui.theme.lightPrickerDividersColor
 import com.lianglliu.countdowntimer.ui.theme.lightIconTintCoLor
 import com.lianglliu.countdowntimer.ui.theme.lightTextColor
 
 data class TimerPickerColor(
-    val bgColorCenter: Color,
-    val bgColorEdge: Color,
-    val textColor: Color,
-    val dividersColor: Color,
+    val bgIconColor: Color,
     val iconTintCoLor: Color,
+    val textColor: Color,
+    val pickerDividersColor: Color,
 )
 
 private val DefaultTimerPickerColor =
     TimerPickerColor(
-        bgLightColorCenter,
-        bgLightColorEdge,
-        lightTextColor,
-        lightDividersColor,
-        lightIconTintCoLor
+        bgIconColor = bgIconLightCenter,
+        iconTintCoLor = lightIconTintCoLor,
+        textColor = lightTextColor,
+        pickerDividersColor = lightPrickerDividersColor,
     )
 
 private val DarkTimerPickerColor =
     TimerPickerColor(
-        bgDarkColorCenter,
-        bgDarkColorEdge,
-        darkTextColor,
-        darkDividersColor,
-        bgLightColorEdge
+        bgIconColor = bgIconDarkCenter,
+        iconTintCoLor = darkIconTintCoLor,
+        textColor = darkTextColor,
+        pickerDividersColor = pickerDarkDividersColor,
     )
 
 fun buildTimerPickerColor(appTheme: AppTheme): TimerPickerColor {
