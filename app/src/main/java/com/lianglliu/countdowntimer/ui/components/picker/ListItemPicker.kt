@@ -67,7 +67,8 @@ fun <T> ListItemPicker(
 
     val coercedAnimatedOffset = animatedOffset.value % halfNumbersColumnHeightPx
 
-    val indexOfElement = getItemIndexForOffset(list, value, animatedOffset.value, halfNumbersColumnHeightPx)
+    val indexOfElement =
+        getItemIndexForOffset(list, value, animatedOffset.value, halfNumbersColumnHeightPx)
 
     var dividersWidth by remember { mutableStateOf(0.dp) }
 
@@ -88,9 +89,15 @@ fun <T> ListItemPicker(
                             adjustTarget = { target ->
                                 val coercedTarget = target % halfNumbersColumnHeightPx
                                 val coercedAnchors =
-                                    listOf(-halfNumbersColumnHeightPx, 0f, halfNumbersColumnHeightPx)
-                                val coercedPoint = coercedAnchors.minByOrNull { abs(it - coercedTarget) }!!
-                                val base = halfNumbersColumnHeightPx * (target / halfNumbersColumnHeightPx).toInt()
+                                    listOf(
+                                        -halfNumbersColumnHeightPx,
+                                        0f,
+                                        halfNumbersColumnHeightPx
+                                    )
+                                val coercedPoint =
+                                    coercedAnchors.minByOrNull { abs(it - coercedTarget) }!!
+                                val base =
+                                    halfNumbersColumnHeightPx * (target / halfNumbersColumnHeightPx).toInt()
                                 coercedPoint + base
                             }
                         ).endState.value
@@ -123,7 +130,12 @@ fun <T> ListItemPicker(
                             text = label(list.elementAt(indexOfElement - 1)),
                             modifier = baseLabelModifier
                                 .offset(y = -halfNumbersColumnHeight)
-                                .alpha(maxOf(minimumAlpha, coercedAnimatedOffset / halfNumbersColumnHeightPx))
+                                .alpha(
+                                    maxOf(
+                                        minimumAlpha,
+                                        coercedAnimatedOffset / halfNumbersColumnHeightPx
+                                    )
+                                )
                         )
                     Label(
                         text = label(list.elementAt(indexOfElement)),
@@ -140,7 +152,12 @@ fun <T> ListItemPicker(
                             text = label(list.elementAt(indexOfElement + 1)),
                             modifier = baseLabelModifier
                                 .offset(y = halfNumbersColumnHeight)
-                                .alpha(maxOf(minimumAlpha, -coercedAnimatedOffset / halfNumbersColumnHeightPx))
+                                .alpha(
+                                    maxOf(
+                                        minimumAlpha,
+                                        -coercedAnimatedOffset / halfNumbersColumnHeightPx
+                                    )
+                                )
                         )
                 }
             }

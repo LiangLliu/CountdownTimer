@@ -1,7 +1,6 @@
 package com.lianglliu.countdowntimer.ui.components.picker
 
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -10,7 +9,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.lianglliu.countdowntimer.ui.viewmodels.TimerViewState
 
@@ -35,47 +33,72 @@ fun MinutesSecondsPicker(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        StringPicker(
-            modifier = Modifier
-                .padding(horizontal = 3.dp)
-                .weight(1f),
 
+        val pickerSelectStyle = Modifier.weight(1f)
+
+        PickerSelect(
+            pickerSelectStyle,
             value = String.format("%02d", value.hours),
             onValueChange = {
                 onValueChange(value.copy(hours = it.toInt()))
             },
             dividersColor = dividersColor,
             textStyle = textStyle,
-            range = hoursRange
+            range = hoursRange,
+            "时",
+            textColor
         )
 
-        SmallText("时", textColor)
-
-        StringPicker(
-            modifier = Modifier.weight(1f),
+        PickerSelect(
+            pickerSelectStyle,
             value = String.format("%02d", value.minutes),
             onValueChange = {
                 onValueChange(value.copy(minutes = it.toInt()))
             },
             dividersColor = dividersColor,
             textStyle = textStyle,
-            range = minutesRange
+            range = minutesRange,
+            "分",
+            textColor
         )
 
-        SmallText("分", textColor)
-
-        StringPicker(
-            modifier = Modifier.weight(1f),
+        PickerSelect(
+            pickerSelectStyle,
             value = String.format("%02d", value.seconds),
             onValueChange = {
                 onValueChange(value.copy(seconds = it.toInt()))
             },
+            dividersColor,
+            textStyle,
+            secondsRange, "秒", textColor
+        )
+    }
+}
+
+@Composable
+fun PickerSelect(
+    modifier: Modifier = Modifier,
+    value: String,
+    onValueChange: (String) -> Unit,
+    dividersColor: Color,
+    textStyle: TextStyle,
+    range: List<String>,
+    smallText: String,
+    textColor: Color,
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        StringPicker(
+            value = value,
+            onValueChange = onValueChange,
             dividersColor = dividersColor,
             textStyle = textStyle,
-            range = secondsRange
+            range = range
         )
 
-        SmallText("秒", textColor)
+        SmallText(smallText, textColor)
     }
 }
 
@@ -85,10 +108,6 @@ fun SmallText(
     textColor: Color
 ) {
     Text(
-        modifier = Modifier.padding(
-            start = 1.dp,
-            end = 7.dp,
-        ),
         textAlign = TextAlign.Center,
         fontWeight = FontWeight.Bold,
         text = text,
