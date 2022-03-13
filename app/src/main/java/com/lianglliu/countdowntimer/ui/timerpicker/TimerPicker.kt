@@ -78,7 +78,8 @@ fun TimerPicker(
                     viewModel.startTimer()
                 },
                 bgCoLor = timerPickerColor.bgIconColor,
-                iconTintCoLor = timerPickerColor.iconTintCoLor
+                iconTintCoLor = timerPickerColor.iconTintCoLor,
+                enabled = timerState.toDuration() != 0
             )
         }
     }

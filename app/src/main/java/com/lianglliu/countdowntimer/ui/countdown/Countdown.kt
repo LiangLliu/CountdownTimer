@@ -15,7 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -33,6 +36,7 @@ import com.lianglliu.countdowntimer.utils.toMinutes
 import com.lianglliu.countdowntimer.utils.toSeconds
 import com.lianglliu.countdowntimer.utils.toTimeHHMMSS
 
+
 @Composable
 fun Countdown(
     navController: NavController,
@@ -41,7 +45,9 @@ fun Countdown(
 ) {
     val viewState by viewModel.countdownState.collectAsState()
     val seconds by rememberSaveable { mutableStateOf(viewState.totalSeconds) }
+    var isNotification by remember { mutableStateOf(false) }
     val countdownColor = buildCountdownColor(appTheme)
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -98,6 +104,7 @@ fun Countdown(
             modifier = Modifier.weight(1f),
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             if (viewState.totalSeconds > 0) {
 
                 CircleIcon(
@@ -126,15 +133,14 @@ fun Countdown(
                 }
 
             } else {
-                CircleIcon(
-                    imageVector = Icons.Default.Stop,
-                    onClick = {
-                        viewModel.clear()
-                        navController.navigate("timerPicker")
-                    },
-                    bgCoLor = countdownColor.bgIconColor,
-                    iconTintCoLor = countdownColor.iconTintCoLor
-                )
+                if (!isNotification) {
+
+                    viewModel.notification(seconds)
+
+                    isNotification = true
+                    viewModel.clear()
+                    navController.navigate("timerPicker")
+                }
             }
         }
     }

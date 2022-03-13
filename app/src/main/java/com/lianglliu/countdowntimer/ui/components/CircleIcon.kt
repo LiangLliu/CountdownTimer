@@ -19,11 +19,14 @@ fun CircleIcon(
     onClick: () -> Unit,
     bgCoLor: Color,
     iconTintCoLor: Color,
+    enabled: Boolean = true,
 ) {
     IconButton(
         modifier = Modifier.padding(horizontal = 5.dp),
-        onClick = onClick
+        onClick = onClick,
+        enabled = enabled
     ) {
+
         Icon(
             imageVector = imageVector,
             contentDescription = "start",
@@ -32,7 +35,7 @@ fun CircleIcon(
                 .clip(CircleShape)
                 .background(bgCoLor)
                 .padding(7.dp),
-            tint = iconTintCoLor
+            tint = if (enabled) iconTintCoLor else iconTintCoLor.copy(0.5f)
         )
     }
 }

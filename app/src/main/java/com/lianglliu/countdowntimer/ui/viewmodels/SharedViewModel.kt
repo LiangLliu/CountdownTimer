@@ -1,10 +1,18 @@
 package com.lianglliu.countdowntimer.ui.viewmodels
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lianglliu.countdowntimer.Graph
 import com.lianglliu.countdowntimer.Graph.timerDataRepository
+import com.lianglliu.countdowntimer.R
 import com.lianglliu.countdowntimer.data.entity.TimerData
+import com.lianglliu.countdowntimer.ui.countdown.buildTimeHintText
+import com.lianglliu.countdowntimer.utils.createNotificationChannel
+import com.lianglliu.countdowntimer.utils.foregroundStartService
+import com.lianglliu.countdowntimer.utils.setOneTimeNotification
 import com.lianglliu.countdowntimer.utils.toHours
 import com.lianglliu.countdowntimer.utils.toMinutes
 import com.lianglliu.countdowntimer.utils.toSeconds
@@ -29,9 +37,18 @@ class SharedViewModel : ViewModel() {
         return job.value == null
     }
 
+    fun notification(totalSeconds: Int) {
+//        countdownNotification(totalSeconds)
+//        Graph.appContext.foregroundStartService("倒计时${buildTimeHintText(totalSeconds)}")
+        Graph.appContext.foregroundStartService("Start")
+    }
+
     private val job = mutableStateOf<Job?>(null)
 
     init {
+        createNotificationChannel(context = Graph.appContext)
+        setOneTimeNotification()
+
         loadTimerViewState()
     }
 
@@ -50,7 +67,8 @@ class SharedViewModel : ViewModel() {
             job.value = viewModelScope.launch {
                 while (_countdownState.value.totalSeconds > 0) {
                     delay(1000)
-                    _countdownState.value = CountdownViewState(countdownState.value.totalSeconds - 1)
+                    _countdownState.value =
+                        CountdownViewState(countdownState.value.totalSeconds - 1)
                 }
             }
         } else {
@@ -105,5 +123,20 @@ data class TimerViewState(
 ) {
     fun toDuration(): Int {
         return hours * 3600 + minutes * 60 + seconds
+    }
+}
+
+private fun countdownNotification(totalSeconds: Int) {
+    val notificationId = 2
+    val notificationCompat = NotificationCompat.Builder(Graph.appContext, "CHANNEL_ID")
+        .setSmallIcon(R.drawable.ic_launcher_background)
+        .setContentTitle("计时结束")
+        .setContentText("倒计时${buildTimeHintText(totalSeconds)}")
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
+        .setAutoCancel(true)
+
+    with(NotificationManagerCompat.from(Graph.appContext)) {
+        notify(notificationId, notificationCompat.build())
+
     }
 }
